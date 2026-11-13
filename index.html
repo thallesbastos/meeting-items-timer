@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cronômetro de Temas | DiversificaDev</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #242424;
+        --card: #21242c;
+        --card-2: #272b36;
+        --borda: #4a3fb0;
+        --roxo: #7b5cf0;
+        --magenta: #c94fd8;
+        --rosa: #ff5fb5;
+        --texto: #ffffff;
+        --texto-suave: #a9adbb;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--texto);
+        min-height: 100vh;
+        padding: 40px 16px 60px;
+      }
+      header {
+        text-align: center;
+        margin-bottom: 36px;
+      }
+      .zigzag {
+        width: 52px;
+        height: 14px;
+        margin: 0 auto 10px;
+      }
+      header h1 {
+        font-size: 1.9rem;
+        font-weight: 700;
+      }
+      header p {
+        color: var(--texto-suave);
+        margin-top: 8px;
+        font-size: 1rem;
+      }
+
+      .card {
+        max-width: 760px;
+        margin: 0 auto 24px;
+        background: var(--card);
+        border: 1.5px solid var(--borda);
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 10px 50px rgba(123, 92, 240, 0.22);
+      }
+      .rotulo {
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #c9a2e8;
+        margin-bottom: 14px;
+      }
+
+      .form {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .form input {
+        background: var(--card-2);
+        border: 1.5px solid var(--borda);
+        border-radius: 14px;
+        color: var(--texto);
+        font-family: inherit;
+        font-size: 0.95rem;
+        padding: 14px 16px;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .form input:focus {
+        border-color: var(--rosa);
+        box-shadow: 0 0 0 3px rgba(255, 95, 181, 0.18);
+      }
+      #tema {
+        flex: 1 1 260px;
+      }
+      #minutos {
+        width: 120px;
+      }
+
+      .btn {
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 0.85rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 999px;
+        padding: 14px 28px;
+        color: #fff;
+        cursor: pointer;
+        background: linear-gradient(90deg, #6f5cf0, #8e44ad);
+        box-shadow: 0 6px 22px rgba(123, 92, 240, 0.4);
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s,
+          opacity 0.15s;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(123, 92, 240, 0.55);
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .btn.secundario {
+        background: transparent;
+        border: 1.5px solid var(--rosa);
+        color: var(--rosa);
+        box-shadow: none;
+      }
+      .btn.secundario:hover {
+        background: rgba(255, 95, 181, 0.1);
+      }
+
+      .lista {
+        list-style: none;
+        margin-top: 8px;
+        display: grid;
+        gap: 12px;
+      }
+      .item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: var(--card-2);
+        border: 1.5px solid var(--borda);
+        border-radius: 16px;
+        padding: 14px 18px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          opacity 0.2s;
+      }
+      .item .num {
+        width: 34px;
+        height: 34px;
+        flex: none;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(255, 95, 181, 0.15);
+        color: var(--rosa);
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+      .item .nome {
+        flex: 1;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+      .item .tempo {
+        color: var(--texto-suave);
+        font-size: 0.85rem;
+      }
+      .item .remover {
+        background: none;
+        border: none;
+        color: var(--texto-suave);
+        font-size: 1.3rem;
+        cursor: pointer;
+        line-height: 1;
+        padding: 4px 8px;
+        border-radius: 8px;
+      }
+      .item .remover:hover {
+        color: var(--rosa);
+      }
+      .item.ativo {
+        border-color: var(--rosa);
+        box-shadow: 0 0 22px rgba(255, 95, 181, 0.3);
+      }
+      .item.feito {
+        opacity: 0.45;
+      }
+      .item.feito .nome {
+        text-decoration: line-through;
+      }
+      .vazio {
+        text-align: center;
+        color: var(--texto-suave);
+        padding: 22px 0 6px;
+        font-size: 0.9rem;
+      }
+
+      .palco {
+        text-align: center;
+      }
+      .palco .tema-atual {
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin: 6px 0 4px;
+      }
+      .relogio {
+        font-size: 5.5rem;
+        font-weight: 700;
+        line-height: 1.1;
+        font-variant-numeric: tabular-nums;
+        background: linear-gradient(90deg, var(--rosa), var(--roxo));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 10px 0;
+      }
+      .relogio.alerta {
+        animation: pulsa 0.6s ease-in-out infinite alternate;
+      }
+      @keyframes pulsa {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.06);
+        }
+      }
+
+      .barra {
+        height: 8px;
+        border-radius: 999px;
+        background: #353a47;
+        overflow: hidden;
+        margin: 10px 0 8px;
+      }
+      .barra > div {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--rosa), var(--roxo));
+        border-radius: 999px;
+        transition: width 0.4s linear;
+      }
+      .minutos-info {
+        color: var(--texto-suave);
+        font-size: 0.8rem;
+      }
+      .controles {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 22px;
+      }
+      .dica {
+        text-align: center;
+        color: var(--texto-suave);
+        font-size: 0.75rem;
+        margin-top: 14px;
+      }
+
+      .fim {
+        display: none;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--rosa);
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <svg
+        class="zigzag"
+        viewBox="0 0 52 14"
+        fill="none"
+        stroke="#c94fd8"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="2,11 10,3 18,11 26,3 34,11 42,3 50,11" />
+      </svg>
+      <h1>Cronômetro de Temas</h1>
+      <p>Monte a pauta, defina o tempo de cada tema e converse com calma.</p>
+    </header>
+
+    <section class="card">
+      <div class="rotulo">Adicionar tema</div>
+      <div class="form">
+        <input
+          id="tema"
+          type="text"
+          placeholder="Nome do tema (ex: Carreira em dados)"
+          maxlength="80"
+        />
+        <input
+          id="minutos"
+          type="number"
+          min="1"
+          max="180"
+          placeholder="Minutos"
+        />
+        <button class="btn" id="btnAdd">Adicionar +</button>
+      </div>
+      <ul class="lista" id="lista"></ul>
+      <div class="vazio" id="vazio">
+        Nenhum tema ainda. Adicione o primeiro acima.
+      </div>
+    </section>
+
+    <section class="card palco">
+      <div class="rotulo" id="rotuloPalco">Pronto para começar</div>
+      <div class="tema-atual" id="temaAtual">Sem tema em andamento</div>
+      <div class="relogio" id="relogio">00:00</div>
+      <div class="barra"><div id="progresso"></div></div>
+      <div class="minutos-info" id="info">Total da pauta: 0 min</div>
+      <div class="controles">
+        <button class="btn" id="btnIniciar">Iniciar ▶</button>
+        <button class="btn secundario" id="btnPausar" disabled>Pausar</button>
+        <button class="btn secundario" id="btnPular" disabled>
+          Pular tema
+        </button>
+        <button class="btn secundario" id="btnReiniciar">Reiniciar</button>
+      </div>
+      <div class="fim" id="fim">
+        🎉 Pauta concluída! Obrigado pela conversa.
+      </div>
+      <div class="dica">
+        Um bip toca a cada minuto e um alarme toca ao fim de cada tema.
+      </div>
+    </section>
+
+    <script>
+      let temas = [];
+      let indice = -1;
+      let restante = 0;
+      let total = 0;
+      let timer = null;
+      let pausado = false;
+      let audioCtx = null;
+
+      const $ = (id) => document.getElementById(id);
+      const fmt = (s) =>
+        String(Math.floor(s / 60)).padStart(2, "0") +
+        ":" +
+        String(s % 60).padStart(2, "0");
+
+      function ctx() {
+        if (!audioCtx)
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        return audioCtx;
+      }
+      function tom(freq, inicio, dur, vol = 0.25, tipo = "sine") {
+        const c = ctx();
+        const o = c.createOscillator();
+        const g = c.createGain();
+        o.type = tipo;
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0, c.currentTime + inicio);
+        g.gain.linearRampToValueAtTime(vol, c.currentTime + inicio + 0.01);
+        g.gain.exponentialRampToValueAtTime(
+          0.001,
+          c.currentTime + inicio + dur,
+        );
+        o.connect(g);
+        g.connect(c.destination);
+        o.start(c.currentTime + inicio);
+        o.stop(c.currentTime + inicio + dur + 0.05);
+      }
+      function bipMinuto() {
+        tom(880, 0, 0.18);
+        tom(660, 0.2, 0.25);
+      }
+      function alarmeFim() {
+        for (let i = 0; i < 4; i++) {
+          tom(1046, i * 0.45, 0.16, 0.35, "square");
+          tom(1046, i * 0.45 + 0.2, 0.16, 0.35, "square");
+          tom(1318, i * 0.45 + 0.4, 0.05, 0.001, "square");
+        }
+        tom(1568, 1.9, 0.7, 0.35, "square");
+      }
+      function alarmeFinal() {
+        for (let i = 0; i < 3; i++) {
+          tom(523, i * 0.6, 0.2, 0.3, "triangle");
+          tom(659, i * 0.6 + 0.2, 0.2, 0.3, "triangle");
+          tom(784, i * 0.6 + 0.4, 0.3, 0.3, "triangle");
+        }
+        tom(1046, 1.9, 1.0, 0.3, "triangle");
+      }
+
+      function desenharLista() {
+        const ul = $("lista");
+        ul.innerHTML = "";
+        temas.forEach((t, i) => {
+          const li = document.createElement("li");
+          li.className =
+            "item" +
+            (i === indice ? " ativo" : "") +
+            (i < indice ? " feito" : "");
+          li.innerHTML =
+            '<div class="num">' +
+            (i + 1) +
+            '</div><div class="nome"></div><div class="tempo">' +
+            t.min +
+            " min</div>";
+          li.querySelector(".nome").textContent = t.nome;
+          if (indice === -1) {
+            const b = document.createElement("button");
+            b.className = "remover";
+            b.textContent = "×";
+            b.title = "Remover";
+            b.onclick = () => {
+              temas.splice(i, 1);
+              desenharLista();
+            };
+            li.appendChild(b);
+          }
+          ul.appendChild(li);
+        });
+        $("vazio").style.display = temas.length ? "none" : "block";
+        const soma = temas.reduce((a, t) => a + t.min, 0);
+        $("info").textContent = "Total da pauta: " + soma + " min";
+      }
+
+      function adicionar() {
+        const nome = $("tema").value.trim();
+        const min = parseInt($("minutos").value, 10);
+        if (!nome || !min || min < 1) {
+          $("tema").focus();
+          return;
+        }
+        temas.push({ nome, min });
+        $("tema").value = "";
+        $("minutos").value = "";
+        $("tema").focus();
+        desenharLista();
+      }
+
+      function iniciarTema(i) {
+        indice = i;
+        total = temas[i].min * 60;
+        restante = total;
+        $("rotuloPalco").textContent =
+          "Tema " + (i + 1) + " de " + temas.length;
+        $("temaAtual").textContent = temas[i].nome;
+        $("relogio").classList.remove("alerta");
+        atualizarTela();
+        desenharLista();
+      }
+
+      function atualizarTela() {
+        $("relogio").textContent = fmt(restante);
+        $("progresso").style.width =
+          (total ? ((total - restante) / total) * 100 : 0) + "%";
+        const decorridos = Math.floor((total - restante) / 60);
+        $("info").textContent =
+          "Minutos completos: " + decorridos + " de " + total / 60;
+        $("relogio").classList.toggle("alerta", restante <= 10 && restante > 0);
+      }
+
+      function tique() {
+        if (pausado) return;
+        restante--;
+        const passou = total - restante;
+        if (restante > 0 && passou > 0 && passou % 60 === 0) bipMinuto();
+        atualizarTela();
+        if (restante <= 0) {
+          clearInterval(timer);
+          timer = null;
+          if (indice < temas.length - 1) {
+            alarmeFim();
+            setTimeout(() => {
+              iniciarTema(indice + 1);
+              timer = setInterval(tique, 1000);
+            }, 2800);
+          } else {
+            alarmeFinal();
+            finalizar();
+          }
+        }
+      }
+
+      function iniciar() {
+        if (!temas.length) {
+          $("tema").focus();
+          return;
+        }
+        ctx();
+        $("fim").style.display = "none";
+        iniciarTema(0);
+        pausado = false;
+        timer = setInterval(tique, 1000);
+        $("btnIniciar").disabled = true;
+        $("btnPausar").disabled = false;
+        $("btnPular").disabled = false;
+        $("btnAdd").disabled = true;
+      }
+
+      function pausar() {
+        pausado = !pausado;
+        $("btnPausar").textContent = pausado ? "Continuar" : "Pausar";
+      }
+
+      function pular() {
+        clearInterval(timer);
+        timer = null;
+        if (indice < temas.length - 1) {
+          alarmeFim();
+          setTimeout(() => {
+            iniciarTema(indice + 1);
+            pausado = false;
+            $("btnPausar").textContent = "Pausar";
+            timer = setInterval(tique, 1000);
+          }, 2800);
+        } else {
+          alarmeFinal();
+          finalizar();
+        }
+      }
+
+      function finalizar() {
+        indice = temas.length;
+        desenharLista();
+        $("rotuloPalco").textContent = "Pauta concluída";
+        $("temaAtual").textContent = "Todos os temas finalizados";
+        $("relogio").textContent = "00:00";
+        $("relogio").classList.remove("alerta");
+        $("progresso").style.width = "100%";
+        $("fim").style.display = "block";
+        $("btnPausar").disabled = true;
+        $("btnPular").disabled = true;
+      }
+
+      function reiniciar() {
+        clearInterval(timer);
+        timer = null;
+        pausado = false;
+        indice = -1;
+        restante = 0;
+        total = 0;
+        $("rotuloPalco").textContent = "Pronto para começar";
+        $("temaAtual").textContent = "Sem tema em andamento";
+        $("relogio").textContent = "00:00";
+        $("relogio").classList.remove("alerta");
+        $("progresso").style.width = "0%";
+        $("fim").style.display = "none";
+        $("btnIniciar").disabled = false;
+        $("btnPausar").disabled = true;
+        $("btnPausar").textContent = "Pausar";
+        $("btnPular").disabled = true;
+        $("btnAdd").disabled = false;
+        desenharLista();
+      }
+
+      $("btnAdd").onclick = adicionar;
+      $("minutos").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") adicionar();
+      });
+      $("tema").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") $("minutos").focus();
+      });
+      $("btnIniciar").onclick = iniciar;
+      $("btnPausar").onclick = pausar;
+      $("btnPular").onclick = pular;
+      $("btnReiniciar").onclick = reiniciar;
+      desenharLista();
+    </script>
+  </body>
+</html>

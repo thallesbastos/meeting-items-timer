@@ -1,154 +1,760 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
-<title>Cronômetro de Pautas | TH.BASTOS × DiversificaDev</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<style>
-:root{font-family:Poppins,system-ui,sans-serif;color-scheme:dark;--bg:#191b24;--card:#232631;--field:#2c303e;--text:#f7f6ff;--muted:#b6b5c8;--border:#5246a1;--pink:#ff65b5;--purple:#8265ef;--track:#404251;--shadow:rgba(80,62,160,.24)}
-:root[data-theme=light]{color-scheme:light;--bg:#f6f4fb;--card:#fff;--field:#f3f0fa;--text:#242136;--muted:#5f5a72;--border:#b7a8e5;--pink:#ac2878;--purple:#6143c5;--track:#e1dcec;--shadow:rgba(80,62,160,.12)}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,rgba(130,101,239,.12),transparent 65%),var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--pink);outline-offset:3px}a{color:inherit} .shell{max-width:1050px;margin:auto;padding:22px 20px 40px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}.brand{font-weight:700;text-decoration:none;font-size:1rem}.brand span{color:var(--pink)}.top-actions,.nav{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.nav a,.nav span,.small{border:1px solid var(--border);border-radius:999px;padding:9px 13px;font-size:.82rem;text-decoration:none;background:var(--card);color:var(--text)}.nav .current{border-color:var(--pink);color:var(--pink)}.nav .soon{opacity:.55;cursor:default}.small[aria-pressed=true]{border-color:var(--pink);color:var(--pink)}.hero{text-align:center;margin:56px auto 30px}.zig{color:var(--pink);font-size:2rem;line-height:1}.hero h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:9px 0}.hero p{color:var(--muted);margin:0}.card{background:var(--card);border:1.5px solid var(--border);border-radius:24px;padding:28px;box-shadow:0 10px 40px var(--shadow);margin:20px auto;max-width:800px}.label{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--pink);margin-bottom:14px}.form{display:flex;gap:12px;flex-wrap:wrap}.form input{background:var(--field);color:var(--text);border:1px solid var(--border);border-radius:13px;padding:13px 15px;min-width:0}.form input:first-child{flex:1 1 270px}.form input:nth-child(2){width:125px}.btn{border:0;border-radius:999px;padding:13px 22px;color:white;background:linear-gradient(95deg,#705af0,#9c4fb6);font-weight:600;font-size:.88rem}.btn.secondary{background:transparent;border:1px solid var(--pink);color:var(--pink)}.btn:hover:not(:disabled),.small:hover:not(:disabled){filter:brightness(1.12)}.list{list-style:none;padding:0;margin:18px 0;display:grid;gap:10px}.item{display:flex;align-items:center;gap:12px;padding:13px;background:var(--field);border:1px solid var(--border);border-radius:14px}.item.active{border-color:var(--pink)}.item.done{opacity:.55}.num{width:32px;height:32px;border-radius:50%;background:rgba(255,101,181,.15);color:var(--pink);display:grid;place-items:center;flex:none;font-weight:700}.item .name{flex:1;overflow-wrap:anywhere}.item .mins{white-space:nowrap;color:var(--muted)}.remove{border:0;background:none;color:var(--muted);font-size:1.5rem}.empty,.hint{color:var(--muted);font-size:.85rem}.empty{text-align:center;padding:16px}.setup-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.meeting{max-width:980px;text-align:center}.meeting .subject{font-size:clamp(1.3rem,3.5vw,2.3rem);overflow-wrap:anywhere;margin:10px 0}.clock{font-size:clamp(4.5rem,17vw,11rem);font-weight:700;line-height:1.2;letter-spacing:-.04em;font-variant-numeric:tabular-nums;background:linear-gradient(95deg,var(--pink),var(--purple));background-clip:text;-webkit-background-clip:text;color:transparent}.clock.warning{animation:pulse 1.4s infinite alternate}@keyframes pulse{to{transform:scale(1.035);opacity:.8}}.progress{height:10px;background:var(--track);border-radius:20px;overflow:hidden;margin:12px auto;max-width:760px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--purple));transition:width .2s linear}.extra{font-weight:600;color:var(--pink);min-height:25px}.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0}.meeting-list{max-width:650px;margin:24px auto;text-align:left}.meeting-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.finish{font-size:1.1rem;color:var(--pink);font-weight:600}.hidden{display:none!important}footer{text-align:center;color:var(--muted);font-size:.78rem;margin:55px 0 5px}footer a{color:var(--pink)}dialog{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:20px;padding:25px;max-width:min(90vw,420px)}dialog::backdrop{background:rgba(0,0,0,.65)}dialog p{color:var(--muted)}.dialog-actions{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap}@media(max-width:600px){.shell{padding:15px}.card{padding:18px}.hero{margin:32px auto 20px}.form input:nth-child(2){flex:1}.form .btn{width:100%}.setup-bottom{justify-content:center}.meeting-top{justify-content:center}}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="MeetingTimer: cronômetro de pautas bilíngue para organizar e conduzir reuniões, com alertas e acréscimos de tempo."
+    />
+    <title>Cronômetro de Pautas | MeetingTimer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <div class="topbar">
+        <a
+          aria-label="MeetingTimer, página inicial"
+          class="brand"
+          href="./index.html"
+        >
+          <svg
+            aria-hidden="true"
+            class="timer-logo"
+            height="36"
+            viewBox="0 0 48 48"
+            width="36"
+          >
+            <defs>
+              <linearGradient id="logoGradient" x1="0" x2="1" y1="0" y2="1">
+                <stop stop-color="#22d3ee"></stop>
+                <stop offset=".52" stop-color="#60a5fa"></stop>
+                <stop offset="1" stop-color="#a78bfa"></stop>
+              </linearGradient>
+            </defs>
+            <circle
+              cx="24"
+              cy="25"
+              fill="none"
+              r="17"
+              stroke="url(#logoGradient)"
+              stroke-width="3"
+            ></circle>
+            <path
+              d="M24 25V14m0 11 9 6M19 4h10M24 4v4"
+              fill="none"
+              stroke="url(#logoGradient)"
+              stroke-linecap="round"
+              stroke-width="3"
+            ></path>
+            <circle cx="24" cy="25" fill="#22d3ee" r="2.6"></circle>
+          </svg>
+          <span class="brand-name">Meeting<span>Timer</span></span>
+        </a>
 
-/* TH.BASTOS × DiversificaDev: neon blue visual language */
-:root{--bg:#080e1d;--card:#101b30;--field:#172640;--text:#f5f9ff;--muted:#b3c3d9;--border:#244c79;--pink:#4bbcff;--purple:#806bfa;--track:#263b56;--shadow:rgba(0,128,255,.14)}
-:root[data-theme=light]{--bg:#f0f7ff;--card:#ffffff;--field:#edf5ff;--text:#10223c;--muted:#47607c;--border:#b4d7f5;--pink:#086aa8;--purple:#6150b9;--track:#dbe8f5;--shadow:rgba(14,89,153,.12)}
-body{background:radial-gradient(ellipse at 50% 0%,rgba(18,120,235,.17),transparent 62%),var(--bg)}
-.brand{display:inline-flex;align-items:center;gap:8px;letter-spacing:.025em}.brand-mark{color:#35baff;font-size:1.55rem}.brand-th{color:var(--text)!important}.brand-dot{color:#35baff!important}
-.nav .current,.small[aria-pressed=true]{border-color:var(--pink)}.zig{color:#41caff;text-shadow:0 0 22px #009bff}
-.btn{background:linear-gradient(100deg,#0b87d6,#6861e7)}.btn.secondary{background:transparent}
-.clock{background:linear-gradient(95deg,#35caff,#6386ff,#ab69ec);background-clip:text;-webkit-background-clip:text}
-.progress>div{background:linear-gradient(90deg,#26c5fa,#7869ff)}
-#theme{display:grid;place-items:center;min-width:42px;min-height:42px;padding:8px}#theme svg{display:block}
-#counter:empty,#status:empty,#extra:empty{display:none}
-.meeting .subject{line-height:1.35;margin:18px 0 12px}
-.meeting .clock{line-height:1.22;padding:4px 0}
-.meeting-list{margin-top:28px}
-/* Presentation takes over the browser TAB only, never the operating-system screen. */
-body.presenting{overflow:hidden}
-body.presenting .shell{max-width:none;padding:0;margin:0}
-body.presenting .topbar,body.presenting .hero,body.presenting #setup,body.presenting footer{display:none!important}
-body.presenting main{height:100dvh;overflow:auto}
-body.presenting #meeting{display:block!important;min-height:100dvh;max-width:none;width:100%;margin:0;border:0;border-radius:0;box-shadow:none;padding:clamp(14px,3vw,40px) clamp(12px,5vw,70px);background:var(--bg)}
-body.presenting #meeting .clock{font-size:clamp(5rem,17vw,14rem)}
-@media(max-width:600px){.topbar{align-items:flex-start}.brand{width:100%}.meeting-top{gap:12px}.meeting-top>div{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.meeting .subject{font-size:clamp(1.3rem,6vw,2rem);line-height:1.45;margin:18px 0}.clock{font-size:clamp(3.8rem,17vw,7rem)}.label{line-height:1.65}.finish{line-height:1.6}.controls{gap:9px}.controls .btn{padding:12px 15px}.meeting-list{margin-top:28px}body.presenting #meeting .clock{font-size:clamp(3.8rem,18vw,8rem)}}
+        <nav aria-label="Navegação" class="nav">
+          <a
+            aria-current="page"
+            class="current"
+            data-i="navTimer"
+            href="./index.html"
+            >Cronômetro</a
+          >
+          <a data-i="navHow" href="./como-usar.html">Como usar</a>
+          <a data-i="navAbout" href="./sobre.html">Sobre</a>
+        </nav>
 
-/* V4: paleta equilibrada entre TH.BASTOS e DiversificaDev, sem neon excessivo */
-:root{--bg:#11141b;--card:#1b202a;--field:#252b37;--text:#edf1f6;--muted:#aeb7c5;--border:#3a4b65;--pink:#78b9cf;--purple:#927fc2;--track:#323b4c;--shadow:rgba(0,0,0,.19)}
-:root[data-theme=light]{--bg:#f4f5f8;--card:#fff;--field:#f0f2f6;--text:#1d2632;--muted:#536173;--border:#b6c5d7;--pink:#24738f;--purple:#67579d;--track:#dce2e9;--shadow:rgba(34,49,75,.08)}
-body{background:radial-gradient(ellipse at 50% -12%,rgba(76,94,142,.09),transparent 65%),var(--bg)}
-.brand{display:inline-flex;align-items:center;gap:10px;white-space:nowrap}.brand-name{font-weight:700;font-size:.98rem;color:var(--text)}.brand-name span{font-weight:500;color:var(--muted)}.timer-logo{flex:none}
-.nav .current,.small[aria-pressed=true]{border-color:var(--pink)}.zig{color:var(--purple);text-shadow:none;font-size:1.25rem}
-.card{border-color:var(--border);box-shadow:0 12px 35px var(--shadow)}
-.btn{background:linear-gradient(110deg,#3c789e,#7366a4);box-shadow:none}.btn.secondary{background:transparent;color:var(--pink);border-color:var(--border)}
-.clock{background:linear-gradient(100deg,#7dbbd3,#9b86d0);background-clip:text;-webkit-background-clip:text}
-.progress>div{background:linear-gradient(90deg,#5aa8c4,#8876b6)}
-.meeting .subject{font-size:clamp(2rem,5vw,3.7rem);line-height:1.18;font-weight:700;letter-spacing:-.025em;margin:18px auto 24px;max-width:850px;text-wrap:balance}
-.meeting-top{display:grid;grid-template-columns:1fr auto;align-items:start;gap:16px;margin-bottom:30px}.meeting-top>div{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.meeting .label{margin-top:12px}.meeting .clock{margin:16px auto 20px}
-.item.active{border-color:var(--pink)}.num{background:rgba(139,127,194,.16);color:var(--pink)}
-body.presenting #meeting{background:var(--bg);padding:clamp(24px,4vw,55px) clamp(18px,5vw,80px)}
-body.presenting #meeting .meeting-top{margin-bottom:clamp(35px,6vh,80px)}
-body.presenting #meeting .subject{font-size:clamp(2.1rem,5.5vw,5rem)}
-@media(max-width:650px){
- .shell{padding:18px 15px 34px}.topbar{display:grid;grid-template-columns:1fr auto;gap:16px 10px;align-items:center}.brand{grid-column:1/2;min-width:0}.brand-name{font-size:.89rem}.timer-logo{width:32px;height:32px}.top-actions{grid-column:2/3;grid-row:1;justify-content:flex-end;flex-wrap:nowrap}.nav{grid-column:1/-1;grid-row:2;display:flex;gap:8px;justify-content:center}.nav a,.nav span{padding:9px 12px;font-size:.78rem}
- .hero{margin:34px auto 25px}.hero h1{line-height:1.18}.hero p{line-height:1.6}
- .meeting{padding:24px 18px}.meeting-top{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-bottom:36px}.meeting-top>#fullscreen{align-self:stretch}.meeting-top>div{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}.meeting-top .small{min-height:44px;line-height:1.4;padding:10px 12px;white-space:normal}
- .meeting .subject{font-size:clamp(2rem,8vw,3rem);margin:22px auto 28px;line-height:1.22}.meeting .clock{font-size:clamp(3.8rem,17vw,7rem)}.meeting .label{margin-top:12px}
- .controls{gap:9px;margin-top:26px}.controls .btn{min-height:44px}.meeting-list{margin-top:36px}
- body.presenting{overflow:auto}body.presenting main{min-height:100dvh;height:auto;overflow:visible}body.presenting #meeting{padding:24px 18px 55px;min-height:100dvh}body.presenting #meeting .meeting-top{margin-bottom:46px}body.presenting #meeting .subject{font-size:clamp(2.2rem,9vw,3.5rem);margin-bottom:32px}body.presenting #meeting .clock{font-size:clamp(3.8rem,17vw,8rem)}
-}
-@media(prefers-reduced-motion:reduce){.clock.warning{animation:none}.progress>div{transition:none}}
+        <div class="top-actions">
+          <button aria-label="Switch language" class="small" id="lang">
+            EN
+          </button>
+          <button aria-label="Alternar tema" class="small" id="theme">
+            <svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18">
+              <path
+                d="M20.5 14.5A8.7 8.7 0 0 1 9.5 3.5 8.7 8.7 0 1 0 20.5 14.5Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
 
-/* V5 | DiversificaDev orbital neon: depth, restraint and luminous accents */
-:root{
- --bg:#070b1b;--card:#10162c;--field:#18213a;--text:#f5f6ff;
- --muted:#aeb9d7;--border:#4d408f;--pink:#f46bdd;--purple:#906aff;
- --track:#283355;--shadow:rgba(55,35,153,.27);
- --cyan:#20e7fa;--blue:#3c9dff;--violet:#a66bff;
-}
-:root[data-theme=light]{--bg:#f1f3ff;--card:#ffffff;--field:#edf0ff;--text:#17203b;--muted:#526080;--border:#aa9bdf;--pink:#a92eab;--purple:#6444c4;--track:#dce2f5;--shadow:rgba(68,47,160,.12);--cyan:#007f9d;--blue:#1767cc;--violet:#7044c4}
-body{background:radial-gradient(ellipse 70% 32% at 50% -5%,rgba(23,126,246,.23),transparent 75%),radial-gradient(ellipse 45% 32% at 100% 38%,rgba(136,58,246,.13),transparent 75%),radial-gradient(ellipse 35% 25% at 0% 80%,rgba(10,206,239,.075),transparent 75%),var(--bg)}
-.topbar{padding:8px 0 20px;border-bottom:1px solid rgba(126,128,237,.18)}
-.brand-name{color:var(--text)}.brand-name span{color:var(--muted)}
-.timer-logo{filter:drop-shadow(0 0 7px rgba(22,224,255,.5))}
-.hero{position:relative;margin:48px auto 34px}.hero h1{font-weight:700;letter-spacing:-.035em;text-shadow:0 0 35px rgba(88,121,255,.18)}
-.zig{color:var(--cyan);text-shadow:0 0 12px rgba(0,225,255,.8);font-size:1.5rem}
-.card{position:relative;background:linear-gradient(140deg,rgba(23,32,61,.97),rgba(13,17,39,.99));border:1px solid rgba(138,104,245,.56);box-shadow:0 14px 48px rgba(0,0,0,.27),0 0 30px rgba(101,67,235,.11),inset 0 1px 0 rgba(116,210,255,.11)}
-.card::before{content:"";pointer-events:none;position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse at 10% 0%,rgba(24,201,255,.085),transparent 46%),radial-gradient(ellipse at 100% 100%,rgba(198,59,247,.055),transparent 45%)}
-.card>*{position:relative}
-.label{color:#b7a5ff;letter-spacing:.13em;font-weight:600}
-.nav a,.nav span,.small{background:rgba(24,33,64,.78);border-color:rgba(109,119,216,.5);transition:border-color .2s,box-shadow .2s,background .2s}
-.nav .current,.small[aria-pressed=true]{color:var(--cyan);border-color:rgba(24,222,247,.7);box-shadow:0 0 15px rgba(12,205,245,.12)}
-.nav a:hover,.small:hover:not(:disabled){border-color:var(--cyan);box-shadow:0 0 17px rgba(19,200,248,.18)}
-.form input{background:rgba(18,27,54,.92);border-color:rgba(105,112,210,.65)}
-.form input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(16,219,244,.13)}
-.btn{background:linear-gradient(105deg,#087ec8 0%,#5367ef 48%,#9c4de6 100%);color:#fff;box-shadow:0 5px 22px rgba(70,84,234,.28);transition:transform .2s,box-shadow .2s,filter .2s}
-.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 7px 25px rgba(51,139,255,.33),0 0 17px rgba(165,69,241,.15)}
-.btn.secondary{background:rgba(26,35,67,.62);color:#b7eaff;border:1px solid rgba(54,178,248,.6);box-shadow:none}
-.btn.secondary:hover:not(:disabled){background:rgba(25,93,139,.24);box-shadow:0 0 15px rgba(0,192,255,.12)}
-.item{background:linear-gradient(100deg,rgba(30,40,73,.94),rgba(22,29,58,.94));border-color:rgba(99,91,181,.57)}
-.item.active{border-color:var(--cyan);box-shadow:0 0 0 1px rgba(21,226,255,.16),0 0 24px rgba(24,201,245,.13)}
-.num{background:linear-gradient(130deg,rgba(225,79,226,.24),rgba(30,194,250,.19));color:#e8a4ff}
-.clock{background:linear-gradient(110deg,#2fe6ff 5%,#4d9fff 35%,#8a78ff 67%,#ed67e9 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(62,127,255,.19))}
-.progress{background:var(--track);box-shadow:inset 0 1px 3px rgba(0,0,0,.25)}
-.progress>div{background:linear-gradient(90deg,#11d6ef,#3b9dff 40%,#8d69ff 72%,#ed63da);box-shadow:0 0 16px rgba(55,154,255,.45)}
-.meeting .subject{color:#f6f7ff;text-shadow:0 0 23px rgba(98,129,255,.18);font-size:clamp(2.2rem,5.3vw,4rem)}
-.extra,.finish{color:#ef8ce8;text-shadow:0 0 12px rgba(237,96,228,.19)}
-.meeting-top{margin-bottom:24px}
-.meeting-list .item.active{background:linear-gradient(110deg,rgba(14,73,108,.45),rgba(38,30,83,.6))}
-footer a{color:var(--cyan)}
-body.presenting #meeting{background:radial-gradient(ellipse at 50% 0%,rgba(19,93,175,.14),transparent 60%),var(--bg)}
-:root[data-theme=light] .card{background:linear-gradient(145deg,#fff,#f7f8ff);border-color:#b8a7e8}
-:root[data-theme=light] .card::before{opacity:.35}
-:root[data-theme=light] .nav a,:root[data-theme=light] .nav span,:root[data-theme=light] .small,:root[data-theme=light] .btn.secondary{background:#f5f7ff;color:#314a76}
-:root[data-theme=light] .form input{background:#f6f7ff}
-:root[data-theme=light] .item{background:linear-gradient(100deg,#f5f6ff,#eef3ff)}
-:root[data-theme=light] .meeting .subject{color:var(--text);text-shadow:none}
-:root[data-theme=light] .label{color:#7650c0}
-:root[data-theme=light] .clock{background:linear-gradient(100deg,#007ca7,#2861d3,#8643b8);background-clip:text;-webkit-background-clip:text}
-:root[data-theme=light] footer a{color:#096c9e}
-@media(max-width:650px){
- .shell{padding:18px 14px 35px}.topbar{row-gap:17px;padding-bottom:17px}
- .hero{margin:31px auto 24px}.hero h1{font-size:clamp(1.8rem,7vw,2.3rem)}
- .meeting-top{gap:14px;margin-bottom:30px}.meeting-top>div{gap:10px}
- .meeting .subject{font-size:clamp(2.1rem,8.5vw,3.2rem)}
- .meeting .clock{font-size:clamp(3.7rem,17vw,7rem)}
- body.presenting #meeting{padding:25px 16px 60px}body.presenting #meeting .meeting-top{margin-bottom:38px}
- body.presenting #meeting .subject{font-size:clamp(2.2rem,9vw,3.6rem)}
-}
-@media(prefers-reduced-motion:reduce){.btn,.nav a,.small{transition:none}}
+      <header class="hero">
+        <h1 data-i="title">Cronômetro de Pautas</h1>
+        <p data-i="subtitle">
+          Organize suas pautas, controle o tempo e conduza reuniões mais
+          produtivas, em qualquer plataforma.
+        </p>
+      </header>
 
-</style>
-<meta content="MeetingTimer: cronômetro de pautas bilíngue para organizar e conduzir reuniões, com alertas e acréscimos de tempo." name="description"/></head>
-<body><div class="shell">
-<div class="topbar"><a aria-label="Cronômetro de Pautas, página inicial" class="brand" href="./index.html"><svg aria-hidden="true" class="timer-logo" height="38" viewbox="0 0 48 48" width="38"><defs><lineargradient id="logoGradient" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#43b5d6"></stop><stop offset=".52" stop-color="#8b78c4"></stop><stop offset="1" stop-color="#bc76a5"></stop></lineargradient></defs><circle cx="24" cy="25" fill="none" r="17" stroke="url(#logoGradient)" stroke-width="3"></circle><path d="M24 25V14m0 11 9 6M19 4h10M24 4v4" fill="none" stroke="url(#logoGradient)" stroke-linecap="round" stroke-width="3"></path><circle cx="24" cy="25" fill="#6ac5d9" r="2.6"></circle></svg><span class="brand-name">Cronômetro <span>de Pautas</span></span></a><nav aria-label="Navegação" class="nav"><a class="current" data-i="navTimer" href="./index.html">Cronômetro</a><a data-i="navHow" href="./como-usar.html">Como usar</a><a data-i="navAbout" href="./sobre.html">Sobre</a></nav><div class="top-actions"><button aria-label="Switch language" class="small" id="lang">EN</button><button aria-label="Alternar tema" class="small" id="theme"><svg aria-hidden="true" height="19" viewbox="0 0 24 24" width="19"><path d="M20.5 14.5A8.7 8.7 0 0 1 9.5 3.5 8.7 8.7 0 1 0 20.5 14.5Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path></svg></button></div></div>
-<header class="hero"><div aria-hidden="true" class="zig">◌ · ◌</div><h1 data-i="title">Cronômetro de Pautas</h1><p data-i="subtitle">Organize os assuntos, distribua o tempo e mantenha sua reunião no ritmo.</p></header>
-<main><section class="card" id="setup"><div class="label" data-i="addTitle">Adicionar pauta</div><form class="form" id="form"><input data-ph="topicPh" id="topic" maxlength="80" placeholder="Nome da pauta" required="" type="text"/><input data-ph="minPh" id="minutes" max="180" min="1" placeholder="Minutos" required="" step="1" type="number"/><button class="btn" data-i="add" type="submit">Adicionar +</button></form><ol class="list" id="topics"></ol><div class="empty" data-i="empty" id="empty">Nenhuma pauta adicionada ainda.</div><div class="setup-bottom"><span class="hint" id="total">Total: 0 min</span><button class="btn" data-i="open" id="open">Iniciar reunião</button></div><p class="hint" data-i="hint">Compartilhe esta aba na sua reunião para que todos acompanhem o cronômetro.</p></section>
-<section aria-label="Cronômetro" class="card meeting hidden" id="meeting"><div class="meeting-top"><button class="small" data-i="fullscreen" id="fullscreen">Modo apresentação</button><div><button aria-pressed="true" class="small" data-i="soundOn" id="sound">Som ligado</button> <button class="small" data-i="end" id="end">Encerrar reunião</button></div></div><div class="label" id="counter"></div><h2 class="subject" id="subject"></h2><div aria-live="polite" class="extra" id="extra"></div><div class="clock" id="clock" role="timer">00:00</div><div class="progress"><div id="progress"></div></div><div aria-live="polite" class="hint" id="status"></div><div class="controls"><button class="btn" data-i="start" id="start">Iniciar ▶</button><button class="btn secondary" data-i="pause" disabled="" id="pause">Pausar</button><button class="btn secondary" data-i="skip" disabled="" id="skip">Pular pauta</button><button class="btn secondary hidden" id="add5">+5 min</button><button class="btn secondary hidden" id="add1">+1 min</button></div><p class="finish hidden" data-i="finished" id="finished">Reunião concluída!</p><ol class="list meeting-list" id="agenda"></ol></section></main>
-<footer>© 2026 <a href="https://github.com/THBastos" rel="noopener noreferrer" target="_blank">Thalles Bastos (@THBastos)</a> · <span data-i="footer">Projeto desenvolvido em contexto de mentoria da</span> <a href="https://diversifica.dev/" rel="noopener noreferrer" target="_blank">DiversificaDev</a>.</footer>
-</div><dialog id="confirm"><h3 data-i="confirmTitle">Encerrar reunião?</h3><p data-i="confirmText">Você voltará à configuração, mantendo todas as pautas cadastradas.</p><div class="dialog-actions"><button class="btn secondary" data-i="cancel" id="cancel">Cancelar</button><button class="btn" data-i="confirmEnd" id="confirmEnd">Encerrar</button></div></dialog>
-<script>
-(()=>{'use strict';
-const $=id=>document.getElementById(id);
-const dict={pt:{navTimer:'Cronômetro',navHow:'Como usar',navAbout:'Sobre',title:'Cronômetro de Pautas',subtitle:'Organize os assuntos, distribua o tempo e mantenha sua reunião no ritmo.',addTitle:'Adicionar pauta',topicPh:'Nome da pauta (ex.: Planejamento)',minPh:'Minutos',add:'Adicionar +',empty:'Nenhuma pauta adicionada ainda.',open:'Iniciar reunião',hint:'Compartilhe esta aba na sua reunião para que todos acompanhem o cronômetro.',fullscreen:'Modo apresentação',exitFullscreen:'Sair da apresentação',soundOn:'Som ligado',soundOff:'Som desligado',end:'Encerrar reunião',start:'Iniciar ▶',pause:'Pausar',resume:'Retomar ▶',skip:'Pular pauta',finished:'Reunião concluída!',footer:'Projeto desenvolvido em contexto de mentoria da',confirmTitle:'Encerrar reunião?',confirmText:'Você voltará à configuração, mantendo todas as pautas cadastradas.',cancel:'Cancelar',confirmEnd:'Encerrar',total:'Total da pauta: {n} min',item:'Pauta {n} de {total}',first:'Pronto para começar',waiting:'Aguardando início',paused:'Pausado',running:'Em andamento',transition:'Próxima pauta em instantes',complete:'Todas as pautas foram concluídas.',added:'Acréscimos +{n} min',remove:'Remover pauta',five:'Faltam cinco minutos',last:'Últimos 30 segundos',done:'Tempo encerrado',oneUsed:'Acréscimo de 1 minuto utilizado',fiveUsed:'Acréscimo de 5 minutos utilizado'},en:{navTimer:'Timer',navHow:'How to use',navAbout:'About',title:'Agenda Timer',subtitle:'Organize topics, allocate time and keep your meeting on track.',addTitle:'Add agenda item',topicPh:'Agenda item (e.g. Planning)',minPh:'Minutes',add:'Add +',empty:'No agenda items yet.',open:'Start meeting',hint:'Share this tab in your meeting so everyone can follow the timer.',fullscreen:'Presentation mode',exitFullscreen:'Exit presentation',soundOn:'Sound on',soundOff:'Sound off',end:'End meeting',start:'Start ▶',pause:'Pause',resume:'Resume ▶',skip:'Skip item',finished:'Meeting completed!',footer:'A project developed during mentoring with',confirmTitle:'End meeting?',confirmText:'You will return to setup with all your agenda items preserved.',cancel:'Cancel',confirmEnd:'End meeting',total:'Total agenda: {n} min',item:'Item {n} of {total}',first:'Ready to begin',waiting:'Waiting to start',paused:'Paused',running:'In progress',transition:'Next item shortly',complete:'All agenda items are complete.',added:'Added time +{n} min',remove:'Remove item',five:'Five minutes remaining',last:'Final 30 seconds',done:'Time is up',oneUsed:'One minute added',fiveUsed:'Five minutes added'}};
-let lang=localStorage.getItem('agenda-lang')==='en'?'en':'pt',theme=localStorage.getItem('agenda-theme')==='light'?'light':'dark';let topics=[],index=-1,state='setup',remaining=0,duration=0,deadline=0,interval=null,transitionTimer=null,added=0,used5=false,used1=false,alert5=false,alert30=false,alert20=false,alert10=false,notice='',audio=null,sound=true;
-const t=(key,values={})=>(dict[lang][key]||key).replace(/\{(\w+)\}/g,(_,k)=>values[k]??'');const fmt=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
-function translate(){document.documentElement.lang=lang==='pt'?'pt-BR':'en';document.querySelectorAll('[data-i]').forEach(el=>{el.textContent=t(el.dataset.i)});document.querySelectorAll('[data-ph]').forEach(el=>el.placeholder=t(el.dataset.ph));$('lang').textContent=lang==='pt'?'EN':'PT';$('theme').innerHTML=theme==='dark'?'<svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M20.5 14.5A8.7 8.7 0 0 1 9.5 3.5 8.7 8.7 0 1 0 20.5 14.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>':'<svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.5 1.5m11.2 11.2 1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';$('theme').setAttribute('aria-label',lang==='pt'?'Alternar tema':'Toggle theme');$('sound').textContent=t(sound?'soundOn':'soundOff');$('fullscreen').textContent=t(document.body.classList.contains('presenting')?'exitFullscreen':'fullscreen');$('pause').textContent=t(state==='paused'?'resume':'pause');render();}
-function applyTheme(){document.documentElement.dataset.theme=theme;translate()}
-function row(item,i,editable){const li=document.createElement('li');li.className='item'+(state!=='setup'&&i===index?' active':'')+(state!=='setup'&&i<index?' done':'');const num=document.createElement('span');num.className='num';num.textContent=i+1;const name=document.createElement('span');name.className='name';name.textContent=item.name;const mins=document.createElement('span');mins.className='mins';mins.textContent=item.min+' min';li.append(num,name,mins);if(editable){const b=document.createElement('button');b.className='remove';b.type='button';b.textContent='×';b.setAttribute('aria-label',t('remove'));b.onclick=()=>{topics.splice(i,1);render()};li.append(b)}return li}
-function render(){for(const [id,editable] of [['topics',true],['agenda',false]]){const el=$(id);el.replaceChildren(...topics.map((item,i)=>row(item,i,editable)))}$('empty').classList.toggle('hidden',topics.length>0);$('total').textContent=t('total',{n:topics.reduce((a,b)=>a+b.min,0)});$('open').disabled=!topics.length;renderMeeting()}
-function renderMeeting(){if(state==='setup')return;$('counter').textContent=state==='done'?'':state==='ready'?t('first'):t('item',{n:index+1,total:topics.length});$('subject').textContent=state==='done'?t('finished'):topics[Math.max(index,0)]?.name||'';$('clock').textContent=fmt(remaining);$('progress').style.width=(duration?Math.min(100,Math.max(0,(duration-remaining)/duration*100)):0)+'%';$('extra').textContent=added?t('added',{n:added}):'';$('clock').classList.toggle('warning',state==='running'&&remaining<=30&&remaining>0);$('status').textContent=state==='ready'?t('waiting'):state==='paused'?t('paused'):state==='transition'?t('transition'):state==='done'?'':notice||t('running');$('start').classList.toggle('hidden',state!=='ready');$('pause').disabled=!['running','paused'].includes(state);$('pause').textContent=t(state==='paused'?'resume':'pause');$('skip').disabled=!['running','paused'].includes(state);$('add5').classList.toggle('hidden',!(['running','paused'].includes(state)&&remaining>30&&remaining<=300&&!used5));$('add1').classList.toggle('hidden',!(['running','paused'].includes(state)&&remaining>0&&remaining<=30&&!used1));$('finished').classList.add('hidden')}
-function clearTimers(){clearInterval(interval);clearTimeout(transitionTimer);interval=null;transitionTimer=null}
-function audioContext(){try{audio??=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();return audio}catch{return null}}
-function beep(freq=700,delay=0,len=.14,vol=.055){if(!sound)return;const c=audioContext();if(!c)return;const osc=c.createOscillator(),gain=c.createGain(),start=c.currentTime+delay;osc.type='sine';osc.frequency.value=freq;gain.gain.setValueAtTime(.0001,start);gain.gain.linearRampToValueAtTime(vol,start+.015);gain.gain.exponentialRampToValueAtTime(.0001,start+len);osc.connect(gain);gain.connect(c.destination);osc.start(start);osc.stop(start+len+.03)}
-function signal(kind){if(kind==='five'){beep(720);beep(580,.22)}else if(kind==='last'){beep(620,0,.22,.045)}else if(kind==='end'){beep(620,0,.16,.045);beep(790,.20,.18,.045);beep(950,.42,.24,.045)}else if(kind==='start'){beep(520,0,.12,.038);beep(690,.16,.14,.042);beep(850,.34,.20,.045)}else if(kind==='extra'){beep(540,0,.10,.04);beep(720,.14,.12,.04);beep(920,.30,.18,.04)}else if(kind==='count30'){beep(620,0,.13,.038)}else if(kind==='count20'){beep(710,0,.14,.044);beep(590,.19,.09,.028)}else if(kind==='count10'){beep(820,0,.14,.05);beep(670,.18,.12,.042);beep(940,.36,.13,.042)}}
-function beginItem(i){index=i;state='running';duration=topics[i].min*60;remaining=duration;deadline=Date.now()+remaining*1000;added=0;used5=false;used1=false;alert5=false;alert30=false;alert20=false;alert10=false;notice='';clearTimers();signal('start');interval=setInterval(tick,200);tick();render()}
-function tick(){if(state!=='running')return;const old=remaining;remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));if(!alert5&&old>300&&remaining<=300&&remaining>0){alert5=true;notice=t('five');signal('five')}if(!alert30&&old>30&&remaining<=30&&remaining>0){alert30=true;notice=t('last');signal('count30')}if(!alert20&&old>20&&remaining<=20&&remaining>0){alert20=true;signal('count20')}if(!alert10&&old>10&&remaining<=10&&remaining>0){alert10=true;signal('count10')}if(remaining===0){advance();return}renderMeeting()}
-function advance(){clearTimers();remaining=0;signal('end');if(index>=topics.length-1){state='done';index=topics.length;notice='';render();return}state='transition';renderMeeting();transitionTimer=setTimeout(()=>beginItem(index+1),1400)}
-function addTime(n){if(!['running','paused'].includes(state))return;if(n===5){if(used5||remaining>300||remaining<=30)return;used5=true}else{if(used1||remaining>30||remaining<=0)return;used1=true}remaining+=n*60;duration+=n*60;added+=n;signal('extra');notice=t(n===5?'fiveUsed':'oneUsed');if(state==='running')deadline+=n*60000;renderMeeting()}
-function open(){if(!topics.length)return;state='ready';index=-1;remaining=topics[0].min*60;duration=remaining;added=0;notice='';$('setup').classList.add('hidden');$('meeting').classList.remove('hidden');render();window.scrollTo({top:0,behavior:'smooth'})}
-function end(){clearTimers();state='setup';index=-1;remaining=0;duration=0;added=0;notice='';$('meeting').classList.add('hidden');$('setup').classList.remove('hidden');document.body.classList.remove('presenting');$('fullscreen').textContent=t('fullscreen');render()}
-$('form').addEventListener('submit',e=>{e.preventDefault();const name=$('topic').value.trim(),min=Number($('minutes').value);if(!name||!Number.isInteger(min)||min<1||min>180)return;topics.push({name,min});$('topic').value='';$('minutes').value='';$('topic').focus();render()});$('open').onclick=open;$('start').onclick=()=>{audioContext();beginItem(0)};$('pause').onclick=()=>{if(state==='running'){remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));state='paused';clearInterval(interval)}else if(state==='paused'){state='running';deadline=Date.now()+remaining*1000;interval=setInterval(tick,200)}renderMeeting()};$('skip').onclick=()=>{if(['running','paused'].includes(state))advance()};$('add5').onclick=()=>addTime(5);$('add1').onclick=()=>addTime(1);$('end').onclick=()=>{if(typeof $('confirm').showModal==='function')$('confirm').showModal();else if(window.confirm(t('confirmTitle')))end()};$('cancel').onclick=()=>$('confirm').close();$('confirmEnd').onclick=()=>{$('confirm').close();end()};$('sound').onclick=()=>{sound=!sound;$('sound').setAttribute('aria-pressed',String(sound));$('sound').textContent=t(sound?'soundOn':'soundOff')};$('fullscreen').onclick=()=>{document.body.classList.toggle('presenting');$('fullscreen').textContent=t(document.body.classList.contains('presenting')?'exitFullscreen':'fullscreen');window.scrollTo(0,0)};$('lang').onclick=()=>{lang=lang==='pt'?'en':'pt';localStorage.setItem('agenda-lang',lang);translate()};$('theme').onclick=()=>{theme=theme==='dark'?'light':'dark';localStorage.setItem('agenda-theme',theme);applyTheme()};applyTheme();
-})();
-</script></body></html>
+      <main>
+        <section class="card" id="setup">
+          <div class="label" data-i="addTitle">Adicionar pauta</div>
+          <form class="form" id="form">
+            <input
+              data-ph="topicPh"
+              id="topic"
+              maxlength="80"
+              placeholder="Nome da pauta (ex.: Apresentações)"
+              required
+              type="text"
+            />
+            <input
+              data-ph="minPh"
+              id="minutes"
+              max="180"
+              min="1"
+              placeholder="Minutos"
+              required
+              step="1"
+              type="number"
+            />
+            <button class="btn" data-i="add" type="submit">Adicionar +</button>
+          </form>
+
+          <ol class="list" id="topics"></ol>
+          <div class="empty" data-i="empty" id="empty">
+            Nenhuma pauta adicionada ainda.
+          </div>
+
+          <div class="setup-bottom">
+            <span class="hint" id="total">Total da pauta: 0 min</span>
+            <button class="btn" data-i="open" id="open">Iniciar reunião</button>
+          </div>
+          <p class="hint" data-i="hint">
+            Compartilhe esta aba na sua reunião para que todos acompanhem o
+            cronômetro.
+          </p>
+        </section>
+
+        <section
+          aria-label="Cronômetro"
+          class="card meeting hidden"
+          id="meeting"
+        >
+          <div class="meeting-top">
+            <button class="small" data-i="fullscreen" id="fullscreen">
+              Modo apresentação
+            </button>
+            <div>
+              <button
+                aria-pressed="true"
+                class="small"
+                data-i="soundOn"
+                id="sound"
+              >
+                Som ligado
+              </button>
+              <button class="small" data-i="end" id="end">
+                Encerrar reunião
+              </button>
+            </div>
+          </div>
+
+          <div class="label" id="counter"></div>
+          <h2 class="subject" id="subject"></h2>
+          <div aria-live="polite" class="extra" id="extra"></div>
+          <div class="clock" id="clock" role="timer">00:00</div>
+          <div class="progress"><div id="progress"></div></div>
+          <div aria-live="polite" class="hint" id="status"></div>
+
+          <div class="controls">
+            <button class="btn" data-i="start" id="start">Iniciar ▶</button>
+            <button class="btn secondary" data-i="pause" disabled id="pause">
+              Pausar
+            </button>
+            <button class="btn secondary" data-i="skip" disabled id="skip">
+              Pular pauta
+            </button>
+            <button class="btn secondary hidden" id="add5">+5 min</button>
+            <button class="btn secondary hidden" id="add1">+1 min</button>
+          </div>
+
+          <ol class="list meeting-list" id="agenda"></ol>
+        </section>
+      </main>
+
+      <footer>
+        2026 ©
+        <a
+          href="https://diversifica.dev/"
+          rel="noopener noreferrer"
+          target="_blank"
+          >DiversificaDev</a
+        >
+        | Desenvolvido em mentoria por
+        <a href="https://thbastos.com" rel="noopener noreferrer" target="_blank"
+          >Thalles Bastos</a
+        >.
+      </footer>
+    </div>
+
+    <dialog id="confirm">
+      <h3 data-i="confirmTitle">Encerrar reunião?</h3>
+      <p data-i="confirmText">
+        Você voltará à configuração, mantendo todas as pautas cadastradas.
+      </p>
+      <div class="dialog-actions">
+        <button class="btn secondary" data-i="cancel" id="cancel">
+          Cancelar
+        </button>
+        <button class="btn" data-i="confirmEnd" id="confirmEnd">
+          Encerrar
+        </button>
+      </div>
+    </dialog>
+
+    <script>
+      (() => {
+        "use strict";
+        const $ = (id) => document.getElementById(id);
+        const STORAGE_KEY = "meetingtimer-pautas";
+
+        function salvarPautas() {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(topics));
+          } catch (erro) {
+            console.warn("Não foi possível salvar as pautas:", erro);
+          }
+        }
+
+        function carregarPautas() {
+          try {
+            const dados = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+            if (!Array.isArray(dados)) return [];
+            return dados.filter(
+              (item) =>
+                item &&
+                typeof item.name === "string" &&
+                item.name.trim().length > 0 &&
+                item.name.length <= 80 &&
+                Number.isInteger(item.min) &&
+                item.min >= 1 &&
+                item.min <= 180,
+            );
+          } catch (erro) {
+            console.warn("Não foi possível recuperar as pautas:", erro);
+            return [];
+          }
+        }
+
+        const dict = {
+          pt: {
+            navTimer: "Cronômetro",
+            navHow: "Como usar",
+            navAbout: "Sobre",
+            title: "Cronômetro de Pautas",
+            subtitle:
+              "Organize os assuntos, distribua o tempo e mantenha sua reunião no ritmo.",
+            addTitle: "Adicionar pauta",
+            topicPh: "Nome da pauta (ex.: Planejamento)",
+            minPh: "Minutos",
+            add: "Adicionar +",
+            empty: "Nenhuma pauta adicionada ainda.",
+            open: "Iniciar reunião",
+            hint: "Compartilhe esta aba na sua reunião para que todos acompanhem o cronômetro.",
+            fullscreen: "Modo apresentação",
+            exitFullscreen: "Sair da apresentação",
+            soundOn: "Som ligado",
+            soundOff: "Som desligado",
+            end: "Encerrar reunião",
+            start: "Iniciar ▶",
+            pause: "Pausar",
+            resume: "Retomar ▶",
+            skip: "Pular pauta",
+            finished: "Reunião concluída!",
+            footer: "Projeto desenvolvido em contexto de mentoria da",
+            confirmTitle: "Encerrar reunião?",
+            confirmText:
+              "Você voltará à configuração, mantendo todas as pautas cadastradas.",
+            cancel: "Cancelar",
+            confirmEnd: "Encerrar",
+            total: "Total da pauta: {n} min",
+            item: "Pauta {n} de {total}",
+            first: "Pronto para começar",
+            waiting: "Aguardando início",
+            paused: "Pausado",
+            running: "Em andamento",
+            transition: "Próxima pauta em instantes",
+            added: "Acréscimos +{n} min",
+            remove: "Remover pauta",
+            five: "Faltam cinco minutos",
+            last: "Últimos 30 segundos",
+            oneUsed: "Acréscimo de 1 minuto utilizado",
+            fiveUsed: "Acréscimo de 5 minutos utilizado",
+          },
+          en: {
+            navTimer: "Timer",
+            navHow: "How to use",
+            navAbout: "About",
+            title: "Agenda Timer",
+            subtitle:
+              "Organize topics, allocate time and keep your meeting on track.",
+            addTitle: "Add agenda item",
+            topicPh: "Agenda item (e.g. Planning)",
+            minPh: "Minutes",
+            add: "Add +",
+            empty: "No agenda items yet.",
+            open: "Start meeting",
+            hint: "Share this tab in your meeting so everyone can follow the timer.",
+            fullscreen: "Presentation mode",
+            exitFullscreen: "Exit presentation",
+            soundOn: "Sound on",
+            soundOff: "Sound off",
+            end: "End meeting",
+            start: "Start ▶",
+            pause: "Pause",
+            resume: "Resume ▶",
+            skip: "Skip item",
+            finished: "Meeting completed!",
+            footer: "A project developed during mentoring with",
+            confirmTitle: "End meeting?",
+            confirmText:
+              "You will return to setup with all your agenda items preserved.",
+            cancel: "Cancel",
+            confirmEnd: "End meeting",
+            total: "Total agenda: {n} min",
+            item: "Item {n} of {total}",
+            first: "Ready to begin",
+            waiting: "Waiting to start",
+            paused: "Paused",
+            running: "In progress",
+            transition: "Next item shortly",
+            added: "Added time +{n} min",
+            remove: "Remove item",
+            five: "Five minutes remaining",
+            last: "Final 30 seconds",
+            oneUsed: "One minute added",
+            fiveUsed: "Five minutes added",
+          },
+        };
+
+        let lang = localStorage.getItem("agenda-lang") === "en" ? "en" : "pt";
+        let theme =
+          localStorage.getItem("agenda-theme") === "light" ? "light" : "dark";
+        let topics = carregarPautas();
+        let index = -1;
+        let state = "setup";
+        let remaining = 0;
+        let duration = 0;
+        let deadline = 0;
+        let interval = null;
+        let transitionTimer = null;
+        let added = 0;
+        let used5 = false;
+        let used1 = false;
+        let alert5 = false;
+        let alert30 = false;
+        let alert20 = false;
+        let alert10 = false;
+        let notice = "";
+        let audio = null;
+        let sound = true;
+
+        const t = (key, values = {}) =>
+          (dict[lang][key] || key).replace(
+            /\{(\w+)\}/g,
+            (_, k) => values[k] ?? "",
+          );
+        const fmt = (s) =>
+          `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+
+        function translate() {
+          document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+          document.querySelectorAll("[data-i]").forEach((el) => {
+            el.textContent = t(el.dataset.i);
+          });
+          document
+            .querySelectorAll("[data-ph]")
+            .forEach((el) => (el.placeholder = t(el.dataset.ph)));
+          document.title = t("title") + " | MeetingTimer";
+          $("lang").textContent = lang === "pt" ? "EN" : "PT";
+          $("theme").innerHTML =
+            theme === "dark"
+              ? '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20.5 14.5A8.7 8.7 0 0 1 9.5 3.5 8.7 8.7 0 1 0 20.5 14.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>'
+              : '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.5 1.5m11.2 11.2 1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+          $("theme").setAttribute(
+            "aria-label",
+            lang === "pt" ? "Alternar tema" : "Toggle theme",
+          );
+          $("sound").textContent = t(sound ? "soundOn" : "soundOff");
+          $("fullscreen").textContent = t(
+            document.body.classList.contains("presenting")
+              ? "exitFullscreen"
+              : "fullscreen",
+          );
+          $("pause").textContent = t(state === "paused" ? "resume" : "pause");
+          render();
+        }
+
+        function applyTheme() {
+          document.documentElement.dataset.theme = theme;
+          translate();
+        }
+
+        function row(item, i, editable) {
+          const li = document.createElement("li");
+          li.className =
+            "item" +
+            (state !== "setup" && i === index ? " active" : "") +
+            (state !== "setup" && i < index ? " done" : "");
+          const num = document.createElement("span");
+          num.className = "num";
+          num.textContent = i + 1;
+          const name = document.createElement("span");
+          name.className = "name";
+          name.textContent = item.name;
+          const mins = document.createElement("span");
+          mins.className = "mins";
+          mins.textContent = item.min + " min";
+          li.append(num, name, mins);
+          if (editable) {
+            const b = document.createElement("button");
+            b.className = "remove";
+            b.type = "button";
+            b.textContent = "×";
+            b.setAttribute("aria-label", t("remove"));
+            b.onclick = () => {
+              topics.splice(i, 1);
+              salvarPautas();
+              render();
+            };
+            li.append(b);
+          }
+          return li;
+        }
+
+        function render() {
+          for (const [id, editable] of [
+            ["topics", true],
+            ["agenda", false],
+          ]) {
+            $(id).replaceChildren(
+              ...topics.map((item, i) => row(item, i, editable)),
+            );
+          }
+          $("empty").classList.toggle("hidden", topics.length > 0);
+          $("total").textContent = t("total", {
+            n: topics.reduce((a, b) => a + b.min, 0),
+          });
+          $("open").disabled = !topics.length;
+          renderMeeting();
+        }
+
+        function renderMeeting() {
+          if (state === "setup") return;
+          $("counter").textContent =
+            state === "done"
+              ? ""
+              : state === "ready"
+                ? t("first")
+                : t("item", { n: index + 1, total: topics.length });
+          $("subject").textContent =
+            state === "done"
+              ? t("finished")
+              : topics[Math.max(index, 0)]?.name || "";
+          $("clock").textContent = fmt(remaining);
+          $("progress").style.width =
+            (duration
+              ? Math.min(
+                  100,
+                  Math.max(0, ((duration - remaining) / duration) * 100),
+                )
+              : 0) + "%";
+          $("extra").textContent = added ? t("added", { n: added }) : "";
+          $("clock").classList.toggle(
+            "warning",
+            state === "running" && remaining <= 30 && remaining > 0,
+          );
+          $("status").textContent =
+            state === "ready"
+              ? t("waiting")
+              : state === "paused"
+                ? t("paused")
+                : state === "transition"
+                  ? t("transition")
+                  : state === "done"
+                    ? ""
+                    : notice || t("running");
+          $("start").classList.toggle("hidden", state !== "ready");
+          $("pause").disabled = !["running", "paused"].includes(state);
+          $("pause").textContent = t(state === "paused" ? "resume" : "pause");
+          $("skip").disabled = !["running", "paused"].includes(state);
+          $("add5").classList.toggle(
+            "hidden",
+            !(
+              ["running", "paused"].includes(state) &&
+              remaining > 30 &&
+              remaining <= 300 &&
+              !used5
+            ),
+          );
+          $("add1").classList.toggle(
+            "hidden",
+            !(
+              ["running", "paused"].includes(state) &&
+              remaining > 0 &&
+              remaining <= 30 &&
+              !used1
+            ),
+          );
+        }
+
+        function clearTimers() {
+          clearInterval(interval);
+          clearTimeout(transitionTimer);
+          interval = null;
+          transitionTimer = null;
+        }
+
+        function audioContext() {
+          try {
+            audio ??= new (window.AudioContext || window.webkitAudioContext)();
+            if (audio.state === "suspended") audio.resume();
+            return audio;
+          } catch {
+            return null;
+          }
+        }
+
+        function beep(freq = 700, delay = 0, len = 0.14, vol = 0.92) {
+          if (!sound) return;
+          const c = audioContext();
+          if (!c) return;
+          const osc = c.createOscillator();
+          const gain = c.createGain();
+          const start = c.currentTime + delay;
+          osc.type = "sine";
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.0001, start);
+          gain.gain.linearRampToValueAtTime(vol, start + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.0001, start + len);
+          osc.connect(gain);
+          gain.connect(c.destination);
+          osc.start(start);
+          osc.stop(start + len + 0.03);
+        }
+
+        function signal(kind) {
+          if (kind === "five") {
+            beep(720);
+            beep(580, 0.92);
+          } else if (kind === "end") {
+            beep(620, 0, 0.16, 0.92);
+            beep(790, 0.2, 0.18, 0.92);
+            beep(950, 0.42, 0.24, 0.92);
+          } else if (kind === "start") {
+            beep(520, 0, 0.12, 0.92);
+            beep(690, 0.16, 0.14, 0.92);
+            beep(850, 0.34, 0.2, 0.92);
+          } else if (kind === "extra") {
+            beep(540, 0, 0.1, 0.92);
+            beep(720, 0.14, 0.12, 0.92);
+            beep(920, 0.3, 0.18, 0.92);
+          } else if (kind === "count30") {
+            beep(620, 0, 0.13, 0.92);
+          } else if (kind === "count20") {
+            beep(710, 0, 0.14, 0.92);
+            beep(590, 0.19, 0.09, 0.92);
+          } else if (kind === "count10") {
+            beep(820, 0, 0.14, 0.92);
+            beep(670, 0.18, 0.12, 0.92);
+            beep(940, 0.36, 0.13, 0.92);
+          }
+        }
+
+        function beginItem(i) {
+          index = i;
+          state = "running";
+          duration = topics[i].min * 60;
+          remaining = duration;
+          deadline = Date.now() + remaining * 1000;
+          added = 0;
+          used5 = false;
+          used1 = false;
+          alert5 = false;
+          alert30 = false;
+          alert20 = false;
+          alert10 = false;
+          notice = "";
+          clearTimers();
+          signal("start");
+          interval = setInterval(tick, 200);
+          tick();
+          render();
+        }
+
+        function tick() {
+          if (state !== "running") return;
+          const old = remaining;
+          remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+          if (!alert5 && old > 300 && remaining <= 300 && remaining > 0) {
+            alert5 = true;
+            notice = t("five");
+            signal("five");
+          }
+          if (!alert30 && old > 30 && remaining <= 30 && remaining > 0) {
+            alert30 = true;
+            notice = t("last");
+            signal("count30");
+          }
+          if (!alert20 && old > 20 && remaining <= 20 && remaining > 0) {
+            alert20 = true;
+            signal("count20");
+          }
+          if (!alert10 && old > 10 && remaining <= 10 && remaining > 0) {
+            alert10 = true;
+            signal("count10");
+          }
+          if (remaining === 0) {
+            advance();
+            return;
+          }
+          renderMeeting();
+        }
+
+        function advance() {
+          clearTimers();
+          remaining = 0;
+          signal("end");
+          if (index >= topics.length - 1) {
+            state = "done";
+            index = topics.length;
+            notice = "";
+            render();
+            return;
+          }
+          state = "transition";
+          renderMeeting();
+          transitionTimer = setTimeout(() => beginItem(index + 1), 1400);
+        }
+
+        function addTime(n) {
+          if (!["running", "paused"].includes(state)) return;
+          if (n === 5) {
+            if (used5 || remaining > 300 || remaining <= 30) return;
+            used5 = true;
+          } else {
+            if (used1 || remaining > 30 || remaining <= 0) return;
+            used1 = true;
+          }
+          remaining += n * 60;
+          duration += n * 60;
+          added += n;
+          signal("extra");
+          notice = t(n === 5 ? "fiveUsed" : "oneUsed");
+          if (state === "running") deadline += n * 60000;
+          renderMeeting();
+        }
+
+        function open() {
+          if (!topics.length) return;
+          state = "ready";
+          index = -1;
+          remaining = topics[0].min * 60;
+          duration = remaining;
+          added = 0;
+          notice = "";
+          $("setup").classList.add("hidden");
+          $("meeting").classList.remove("hidden");
+          render();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function end() {
+          clearTimers();
+          state = "setup";
+          index = -1;
+          remaining = 0;
+          duration = 0;
+          added = 0;
+          notice = "";
+          $("meeting").classList.add("hidden");
+          $("setup").classList.remove("hidden");
+          document.body.classList.remove("presenting");
+          $("fullscreen").textContent = t("fullscreen");
+          render();
+        }
+
+        $("form").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = $("topic").value.trim();
+          const min = Number($("minutes").value);
+          if (!name || !Number.isInteger(min) || min < 1 || min > 180) return;
+          topics.push({ name, min });
+          salvarPautas();
+          $("topic").value = "";
+          $("minutes").value = "";
+          $("topic").focus();
+          render();
+        });
+
+        $("open").onclick = open;
+        $("start").onclick = () => {
+          audioContext();
+          beginItem(0);
+        };
+        $("pause").onclick = () => {
+          if (state === "running") {
+            remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+            state = "paused";
+            clearInterval(interval);
+          } else if (state === "paused") {
+            state = "running";
+            deadline = Date.now() + remaining * 1000;
+            interval = setInterval(tick, 200);
+          }
+          renderMeeting();
+        };
+        $("skip").onclick = () => {
+          if (["running", "paused"].includes(state)) advance();
+        };
+        $("add5").onclick = () => addTime(5);
+        $("add1").onclick = () => addTime(1);
+        $("end").onclick = () => {
+          if (typeof $("confirm").showModal === "function")
+            $("confirm").showModal();
+          else if (window.confirm(t("confirmTitle"))) end();
+        };
+        $("cancel").onclick = () => $("confirm").close();
+        $("confirmEnd").onclick = () => {
+          $("confirm").close();
+          end();
+        };
+        $("sound").onclick = () => {
+          sound = !sound;
+          $("sound").setAttribute("aria-pressed", String(sound));
+          $("sound").textContent = t(sound ? "soundOn" : "soundOff");
+        };
+        $("fullscreen").onclick = () => {
+          document.body.classList.toggle("presenting");
+          $("fullscreen").textContent = t(
+            document.body.classList.contains("presenting")
+              ? "exitFullscreen"
+              : "fullscreen",
+          );
+          window.scrollTo(0, 0);
+        };
+        $("lang").onclick = () => {
+          lang = lang === "pt" ? "en" : "pt";
+          localStorage.setItem("agenda-lang", lang);
+          translate();
+        };
+        $("theme").onclick = () => {
+          theme = theme === "dark" ? "light" : "dark";
+          localStorage.setItem("agenda-theme", theme);
+          applyTheme();
+        };
+
+        applyTheme();
+      })();
+    </script>
+  </body>
+</html>
